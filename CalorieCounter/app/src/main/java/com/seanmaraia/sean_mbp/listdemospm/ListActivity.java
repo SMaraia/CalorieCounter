@@ -2,6 +2,8 @@ package com.seanmaraia.sean_mbp.listdemospm;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +22,7 @@ import java.util.Locale;
 public class ListActivity extends AppCompatActivity {
 
     ArrayList<TodoItem> mData;
-    ArrayAdapter mAdapter;
+    TodoItemsAdapter mAdapter;
     int mCounter;
 
     @Override
@@ -32,31 +34,33 @@ public class ListActivity extends AppCompatActivity {
         mData = dataStore.getData();
 
 
-        mAdapter = new TodoItemsAdapter(this, R.layout.simple_list_item, mData);
-        ListView listView = (ListView) findViewById(R.id.my_list);
-        listView.setAdapter(mAdapter);
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.my_list);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        mAdapter = new TodoItemsAdapter(mData);
+        mRecyclerView.setAdapter(mAdapter);
 
         mCounter = dataStore.getNumTimesRun();
 
         Log.d("ListActivity", "You've run this app " + mCounter + " times.");
         mCounter += 1;
 
-        listView.setOnItemLongClickListener(
+        /*recyclerView.setOnItemLongClickListener(
                 new AdapterView.OnItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                         Log.d("ListActivity", "Long Press");
-                        if(position != 0) {
+                        if (position != 0) {
                             mData.remove(position);
                             mAdapter.notifyDataSetChanged();
                         }
 
 
-
                         return true;
                     }
                 }
-        );
+        );*/
 
         Log.d("ListActivity", "mData= " + mData.toString());
         TodoItem firstItem = (TodoItem)mData.get(0);
