@@ -1,10 +1,8 @@
 package com.seanmaraia.sean_mbp.listdemospm;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.provider.CalendarContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,11 +11,8 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.view.View;
 
 import java.text.SimpleDateFormat;
@@ -28,9 +23,9 @@ import java.util.Locale;
 
 public class ListActivity extends AppCompatActivity {
 
-    ArrayList<TodoItem> mData;
+    ArrayList<Meal> mData;
     RecyclerView mRecyclerView;
-    TodoItemsAdapter mAdapter;
+    MealAdapter mAdapter;
     int mCounter;
     private String mMealText = "";
     private String mCalText = "";
@@ -48,7 +43,7 @@ public class ListActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mAdapter = new TodoItemsAdapter(mData);
+        mAdapter = new MealAdapter(mData);
         mRecyclerView.setAdapter(mAdapter);
 
         mCounter = dataStore.getNumTimesRun();
@@ -140,7 +135,7 @@ public class ListActivity extends AppCompatActivity {
                Date now = Calendar.getInstance().getTime();
                SimpleDateFormat formatter = new SimpleDateFormat("EEE, MMM dd, yyyy", Locale.US);
                String formattedDate = formatter.format(now);
-               TodoItem item = new TodoItem(mMealText, mCalText, formattedDate);
+               Meal item = new Meal(mMealText, mCalText, formattedDate);
                mData.add(item);
            }
         });
@@ -162,7 +157,7 @@ public class ListActivity extends AppCompatActivity {
             Date now = Calendar.getInstance().getTime();
             SimpleDateFormat formatter = new SimpleDateFormat("EEE, MMM dd, yyyy", Locale.US);
             String formattedDate = formatter.format(now);
-            TodoItem item = new TodoItem(text, formattedDate);
+            Meal item = new Meal(text, formattedDate);
             mData.add(item);
 
             Log.d("ListActivity", "added item - item=" + item.toString());

@@ -6,11 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -19,11 +15,11 @@ import java.util.List;
  */
 
 
-public class TodoItemsAdapter extends RecyclerView.Adapter<TodoItemsAdapter.MealViewHolder> {
+public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder> {
 
     private Context mContext;
 
-    List<TodoItem> mItemList;
+    List<Meal> mItemList;
     public class MealViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView mealname;
         TextView calorieCount;
@@ -37,7 +33,15 @@ public class TodoItemsAdapter extends RecyclerView.Adapter<TodoItemsAdapter.Meal
             calorieCount = (TextView)itemView.findViewById(R.id.calories);
             mDate = (TextView)itemView.findViewById(R.id.date);
 
-            mealname.setOnClickListener(this);
+            mealname.setOnLongClickListener(
+                    new RecyclerView.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View view) {
+                            delete(getAdapterPosition());
+                            return true;
+                        }
+                    }
+            );
         }
 
         @Override
@@ -51,7 +55,7 @@ public class TodoItemsAdapter extends RecyclerView.Adapter<TodoItemsAdapter.Meal
         notifyItemRemoved(position);
     }
 
-    TodoItemsAdapter(List<TodoItem> todos){
+    MealAdapter(List<Meal> todos){
         mItemList = todos;
     }
     @Override

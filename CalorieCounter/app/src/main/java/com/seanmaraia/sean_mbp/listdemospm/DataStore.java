@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import java.security.Key;
 import java.util.ArrayList;
 
 /**
@@ -16,7 +15,7 @@ import java.util.ArrayList;
  */
 public class DataStore {
     private static DataStore sDataStore;
-    private ArrayList<TodoItem> mData;
+    private ArrayList<Meal> mData;
     private int mNumTimesRun;
 
     public static final String PREFS_NAME = "DATA_STORE_PREFERENCES";
@@ -39,7 +38,7 @@ public class DataStore {
 
         String arrayListAsJson = settings.getString(KEY_ITEMS_STRING, "[{text:\"Use this app every day!\", formattedDate:\"9/1/2015\", complete:true}]");
         Gson gson = new Gson();
-        ArrayList<TodoItem> array = gson.fromJson(arrayListAsJson, new TypeToken<ArrayList<TodoItem>>(){}.getType());
+        ArrayList<Meal> array = gson.fromJson(arrayListAsJson, new TypeToken<ArrayList<Meal>>(){}.getType());
         Log.d("DataStore", "reading string - arrayListToJson" + arrayListAsJson);
         mData = array;
 
@@ -71,7 +70,7 @@ public class DataStore {
         mNumTimesRun = numTimesRun;
     }
 
-    public ArrayList<TodoItem> getData() {
+    public ArrayList<Meal> getData() {
         return mData;
     }
 }
