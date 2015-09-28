@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -20,18 +21,34 @@ import java.util.List;
 
 public class TodoItemsAdapter extends RecyclerView.Adapter<TodoItemsAdapter.MealViewHolder> {
 
+    private Context mContext;
+
     List<TodoItem> mItemList;
-    public static class MealViewHolder extends RecyclerView.ViewHolder {
+    public class MealViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView mealname;
         TextView calorieCount;
+        TextView mDate;
         CardView mCardView;
 
         MealViewHolder(View itemView) {
             super(itemView);
             mCardView = (CardView)itemView.findViewById(R.id.cv);
             mealname = (TextView)itemView.findViewById(R.id.label);
-            calorieCount = (TextView)itemView.findViewById(R.id.date);
+            calorieCount = (TextView)itemView.findViewById(R.id.calories);
+            mDate = (TextView)itemView.findViewById(R.id.date);
+
+            mealname.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            delete(getAdapterPosition());
+        }
+    }
+
+    public void delete(int position){
+        mItemList.remove(position);
+        notifyItemRemoved(position);
     }
 
     TodoItemsAdapter(List<TodoItem> todos){
@@ -47,7 +64,6 @@ public class TodoItemsAdapter extends RecyclerView.Adapter<TodoItemsAdapter.Meal
     public MealViewHolder onCreateViewHolder(ViewGroup viewGroup, int i){
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.better_list_item, viewGroup, false);
         MealViewHolder mvh = new MealViewHolder(v);
-
         return mvh;
 
     }
@@ -55,7 +71,8 @@ public class TodoItemsAdapter extends RecyclerView.Adapter<TodoItemsAdapter.Meal
     @Override
     public void onBindViewHolder(MealViewHolder viewHolder, int i){
         viewHolder.mealname.setText(mItemList.get(i).text);
-        viewHolder.calorieCount.setText(mItemList.get(i).formattedDate);
+        viewHolder.calorieCount.setText(mItemList.get(i).calText);
+        viewHolder.mDate.setText(mItemList.get(i).formattedDate);
     }
 
     @Override

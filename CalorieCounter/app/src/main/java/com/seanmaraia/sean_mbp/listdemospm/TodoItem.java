@@ -7,16 +7,18 @@ import android.support.v7.widget.RecyclerView;
  */
 public class TodoItem {
     public String text;
+    public String calText;
     public String formattedDate;
     public boolean complete;
 
-    public TodoItem(String text, String formattedDate) {
+    public TodoItem(String text, String calText, String formattedDate) {
         this.text = text;
+        this.calText = calText;
         this.formattedDate = formattedDate;
         complete = false;
     }
 
     public String toString() {
-        return "TodoItem: text=" + text + ", formattedDate=" + formattedDate + ", complete=" + complete;
+        return "TodoItem: text=" + text + ", calText=" + calText + ", formattedDate=" + formattedDate + ", complete=" + complete;
     }
 }

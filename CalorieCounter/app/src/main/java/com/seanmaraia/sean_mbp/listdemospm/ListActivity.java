@@ -1,15 +1,22 @@
 package com.seanmaraia.sean_mbp.listdemospm;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.provider.CalendarContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.view.View;
 
@@ -22,8 +29,11 @@ import java.util.Locale;
 public class ListActivity extends AppCompatActivity {
 
     ArrayList<TodoItem> mData;
+    RecyclerView mRecyclerView;
     TodoItemsAdapter mAdapter;
     int mCounter;
+    private String mMealText = "";
+    private String mCalText = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +44,7 @@ public class ListActivity extends AppCompatActivity {
         mData = dataStore.getData();
 
 
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.my_list);
+        mRecyclerView = (RecyclerView) findViewById(R.id.my_list);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -61,12 +71,6 @@ public class ListActivity extends AppCompatActivity {
                     }
                 }
         );*/
-
-        Log.d("ListActivity", "mData= " + mData.toString());
-        TodoItem firstItem = (TodoItem)mData.get(0);
-        Log.d("ListActivity", "firstItem.text = " + firstItem.text);
-        Log.d("ListActivity", "firstItem.formattedDate = " +
-                firstItem.formattedDate);
     }
 
     public void onPause(){
@@ -100,13 +104,63 @@ public class ListActivity extends AppCompatActivity {
     }
 
     public void onAddItem(View view){
-        EditText editText = (EditText) findViewById(R.id.editText);
+        //Found on stack overflow
+        // http://stackoverflow.com/questions/10903754/input-text-dialog-android
+        //http://stackoverflow.com/questions/12876624/multiple-edittext-objects-in-alertdialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Meal");
+
+        Context context = view.getContext();
+        LinearLayout layout = new LinearLayout(context);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+
+        //Set up the inputs
+        final EditText inputText = new EditText(context);
+        inputText.setHint("Meal");
+        inputText.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        layout.addView(inputText);
+
+        final EditText inputNum = new EditText(context);
+        inputNum.setHint("Calories");
+        inputNum.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+        layout.addView(inputNum);
+
+        builder.setView(layout);
+
+        //Set up buttons
+        builder.setPositiveButton("Add", new DialogInterface.OnClickListener(){
+           @Override
+            public void onClick(DialogInterface dialog, int which){
+               //Store text values when "Add" is pressed
+               mMealText = inputText.getText().toString();
+               mCalText = inputNum.getText().toString();
+
+               //Create the item
+               Date now = Calendar.getInstance().getTime();
+               SimpleDateFormat formatter = new SimpleDateFormat("EEE, MMM dd, yyyy", Locale.US);
+               String formattedDate = formatter.format(now);
+               TodoItem item = new TodoItem(mMealText, mCalText, formattedDate);
+               mData.add(item);
+           }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+
+        /*EditText editText = (EditText) findViewById(R.id.editText);
         String text = editText.getText().toString();
 
         text = text.trim();
         if(text.length() > 0) {
             Date now = Calendar.getInstance().getTime();
-            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+            SimpleDateFormat formatter = new SimpleDateFormat("EEE, MMM dd, yyyy", Locale.US);
             String formattedDate = formatter.format(now);
             TodoItem item = new TodoItem(text, formattedDate);
             mData.add(item);
@@ -115,6 +169,6 @@ public class ListActivity extends AppCompatActivity {
             Log.d("ListActivity", "added item - mData=" + mData.toString());
         }
 
-        editText.setText("");
+        editText.setText("");*/
     }
 }
