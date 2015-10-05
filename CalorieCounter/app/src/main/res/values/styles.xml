@@ -11,5 +11,5 @@
     <style name="MyActionBar">
         <item name="android:background">@color/lightGreen</item>
     </style>
-    
+
 </resources>

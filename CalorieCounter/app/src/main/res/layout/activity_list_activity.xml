@@ -22,19 +22,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-<<<<<<< HEAD
         android:layout_alignParentRight="true"
-        app:fabSize="normal"
         android:elevation="12dp"
         android:layout_margin="16dp"
-=======
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp"
->>>>>>> 1101f0b67f8ce6ee44a0a552cb1e542f9c2467ab
         android:onClick="onAddItem"
         android:src="@drawable/ic_add_white_36dp"
         android:tint="@color/darkGreen"
