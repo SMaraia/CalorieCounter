@@ -108,21 +108,23 @@ public class ListActivity extends AppCompatActivity {
         Context context = view.getContext();
         LinearLayout layout = new LinearLayout(context);
         layout.setOrientation(LinearLayout.VERTICAL);
-
+        layout.setBackgroundColor(getResources().getColor(R.color.lightGreen));
 
         //Set up the inputs
         final EditText inputText = new EditText(context);
+        inputText.setTextColor(getResources().getColor(R.color.darkGreen));
+        inputText.setHintTextColor(getResources().getColor(R.color.darkGreen));
         inputText.setHint("Meal");
         inputText.setRawInputType(InputType.TYPE_CLASS_TEXT);
         layout.addView(inputText);
 
         final EditText inputNum = new EditText(context);
+        inputNum.setTextColor(getResources().getColor(R.color.darkGreen));
+        inputNum.setHintTextColor(getResources().getColor(R.color.darkGreen));
         inputNum.setHint("Calories");
         inputNum.setRawInputType(InputType.TYPE_CLASS_NUMBER);
         layout.addView(inputNum);
-
         builder.setView(layout);
-
         //Set up buttons
         builder.setPositiveButton("Add", new DialogInterface.OnClickListener(){
            @Override
