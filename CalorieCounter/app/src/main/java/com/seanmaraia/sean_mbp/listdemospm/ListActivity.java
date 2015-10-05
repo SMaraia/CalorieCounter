@@ -3,6 +3,7 @@ package com.seanmaraia.sean_mbp.listdemospm;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,6 +30,8 @@ public class ListActivity extends AppCompatActivity {
     int mCounter;
     private String mMealText = "";
     private String mCalText = "";
+    public final static String DATES = "com.seanmaraia.sean_mbplistdemospm.DATE_DATA";
+    public final static String CALORIES = "com.seanmaraia.sean_mbplistdemospm.CALORIE_DATA";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +48,6 @@ public class ListActivity extends AppCompatActivity {
 
         mAdapter = new MealAdapter(mData);
         mRecyclerView.setAdapter(mAdapter);
-
-        mCounter = dataStore.getNumTimesRun();
-
-        Log.d("ListActivity", "You've run this app " + mCounter + " times.");
-        mCounter += 1;
 
         /*recyclerView.setOnItemLongClickListener(
                 new AdapterView.OnItemLongClickListener() {
@@ -96,6 +94,42 @@ public class ListActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onGraph(View view){
+        if(mData.size() > 0) {
+            ArrayList<String> dates = new ArrayList<>();
+            ArrayList<Integer> calories = new ArrayList<>();
+
+            //get all of the date and calorie info from mData
+            for (int i = 0; i < mData.size(); i++) {
+                dates.add(mData.get(i).formattedDate);
+                calories.add(Integer.parseInt(mData.get(i).calText));
+            }
+
+            //add calories together on matching dates
+            for (int i = 0; i < dates.size() - 1; i++) {
+                if (dates.get(i).equals(dates.get(i + 1))) {
+                    //set the new calories for the day
+                    int cal1 = calories.get(i);
+                    int cal2 = calories.get(i + 1);
+                    calories.remove(i + 1);
+                    calories.remove(i);
+                    calories.add(i, (cal1 + cal2));
+
+                    //remove the matching date
+                    dates.remove(i + 1);
+
+                    i--;
+                }
+            }
+
+            //Go to graphing activity
+            Intent intent = new Intent(this, GraphActivity.class);
+            intent.putExtra(DATES, dates);
+            intent.putExtra(CALORIES, calories);
+            startActivity(intent);
+        }
     }
 
     public void onAddItem(View view){
