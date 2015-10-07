@@ -36,7 +36,7 @@ public class DataStore {
         SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         mNumTimesRun = settings.getInt(KEY_NUM_TIMES_RUN, 0);
 
-        String arrayListAsJson = settings.getString(KEY_ITEMS_STRING, "[{text:\"Use this app every day!\", formattedDate:\"9/1/2015\", complete:true}]");
+        String arrayListAsJson = settings.getString(KEY_ITEMS_STRING, "[]");
         Gson gson = new Gson();
         ArrayList<Meal> array = gson.fromJson(arrayListAsJson, new TypeToken<ArrayList<Meal>>(){}.getType());
         Log.d("DataStore", "reading string - arrayListToJson" + arrayListAsJson);
