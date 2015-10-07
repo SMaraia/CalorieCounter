@@ -4,10 +4,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:elevation="0dp"
                 tools:context=".ListActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_list"
+        android:elevation="0dp"
         android:background="@color/offWhite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,8 +25,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:elevation="12dp"
-        android:layout_margin="16dp"
+        android:layout_margin="8dp"
         android:onClick="onAddItem"
         android:src="@drawable/ic_add_white_36dp"
         android:tint="@color/darkGreen"
@@ -32,17 +35,19 @@
         app:backgroundTint="@color/lightGreen"
         android:id="@+id/addButton"/>
 
-    <Button
+    <android.support.design.widget.FloatingActionButton
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Graph"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp"
+        android:layout_margin="8dp"
+        android:elevation="12dp"
+        android:src="@drawable/ic_broken_image_white_36dp"
+        android:scaleType="center"
+        android:tint="@color/darkGreen"
+        app:backgroundTint="@color/lightGreen"
         android:onClick="onGraph"
         android:id="@+id/graphButton"/>
 </RelativeLayout>

@@ -5,41 +5,48 @@
     android:layout_height="wrap_content"
     xmlns:android.support.v7.CardView="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/transparent"
-    android:padding="16dp">
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android.support.v7.CardView:cardCornerRadius="14dp"
-        android.support.v7.CardView:cardElevation="20dp"
-        android:id="@+id/cv">
+    android:layout_marginLeft="62dp"
+    android:layout_marginRight="62dp">
 
-        <RelativeLayout
+
+
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/lightGreen"
-            android:padding="12dp">
+            android:layout_height="wrap_content"
+            android.support.v7.CardView:cardCornerRadius="14dp"
+            android.support.v7.CardView:cardElevation="10dp"
+            android.support.v7.CardView:cardUseCompatPadding="true"
+            android:id="@+id/cv">
 
-            <TextView android:id="@+id/label"
-                android:layout_height="fill_parent"
-                android:layout_width="fill_parent"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/lightGreen"
+                android:padding="12dp">
 
-            <TextView android:id="@+id/calories"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_alignParentRight="true"/>
+                <TextView android:id="@+id/label"
+                    android:layout_height="fill_parent"
+                    android:layout_width="fill_parent"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
 
-            <TextView android:id="@+id/date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/label"
-                android:textSize="12sp"/>
+                <TextView android:id="@+id/calories"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_alignParentRight="true"/>
 
-        </RelativeLayout>
+                <TextView android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/label"
+                    android:textSize="12sp"/>
 
-    </android.support.v7.widget.CardView>
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+
 
 </LinearLayout>

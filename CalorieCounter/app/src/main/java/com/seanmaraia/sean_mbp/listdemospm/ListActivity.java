@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class ListActivity extends AppCompatActivity {
@@ -41,6 +42,18 @@ public class ListActivity extends AppCompatActivity {
         DataStore dataStore = DataStore.get(this);
         mData = dataStore.getData();
 
+        if(dataStore.getNumTimesRun() == 0)
+        {
+            for(int i = 0; i < 10; i++){
+                mMealText = "Meal " + i;
+                mCalText = (650 + i * 10) + "";
+                GregorianCalendar then = new GregorianCalendar(2015, 8, 30 - i);
+                SimpleDateFormat formatter = new SimpleDateFormat("EEE, MMM dd, yyyy", Locale.US);
+                String formattedDate = formatter.format(then.getTime());
+                Meal item = new Meal(mMealText, mCalText, formattedDate);
+                mData.add(item);
+            }
+        }
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_list);
         mRecyclerView.setHasFixedSize(true);
@@ -49,35 +62,21 @@ public class ListActivity extends AppCompatActivity {
         mAdapter = new MealAdapter(mData);
         mRecyclerView.setAdapter(mAdapter);
 
-        /*recyclerView.setOnItemLongClickListener(
-                new AdapterView.OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                        Log.d("ListActivity", "Long Press");
-                        if (position != 0) {
-                            mData.remove(position);
-                            mAdapter.notifyDataSetChanged();
-                        }
 
-
-                        return true;
-                    }
-                }
-        );*/
     }
 
     public void onPause(){
         super.onPause();
         Log.d("ListActivity", "Telling DataStore to save mCounter=" + mCounter);
         DataStore dataStore = DataStore.get(this);
-        dataStore.setNumTimesRun(mCounter);
+        dataStore.setNumTimesRun(dataStore.getNumTimesRun() + 1);
         dataStore.commitChanges(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_list_activiy, menu);
+        getMenuInflater().inflate(R.menu.menu_list_activity, menu);
         return true;
     }
 
@@ -92,6 +91,7 @@ public class ListActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+
 
         return super.onOptionsItemSelected(item);
     }
