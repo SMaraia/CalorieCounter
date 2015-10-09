@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,9 +13,12 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -62,6 +66,32 @@ public class ListActivity extends AppCompatActivity {
         mAdapter = new MealAdapter(mData);
         mRecyclerView.setAdapter(mAdapter);
 
+        final FloatingActionButton mAddButton = (FloatingActionButton) findViewById(R.id.addButton);
+        final FloatingActionButton mGraphButton = (FloatingActionButton) findViewById(R.id.graphButton);
+
+        mRecyclerView.addOnScrollListener(new HidingScrollListener() {
+            @Override
+            public void onHide() {
+                Log.d("ListActivity", "Hiding");
+                RelativeLayout.LayoutParams lp1 = (RelativeLayout.LayoutParams) mAddButton.getLayoutParams();
+                int fabMargin1 = lp1.bottomMargin;
+                mAddButton.animate().translationY(mAddButton.getHeight() + fabMargin1).setInterpolator(new AccelerateInterpolator(2)).start();
+
+                RelativeLayout.LayoutParams lp2 = (RelativeLayout.LayoutParams) mGraphButton.getLayoutParams();
+                int fabMargin2 = lp1.bottomMargin;
+                mGraphButton.animate().translationY(mGraphButton.getHeight() + mAddButton.getHeight() + fabMargin2).setInterpolator(new AccelerateInterpolator(2)).start();
+
+            }
+
+            @Override
+            public void onShow() {
+                Log.d("ListActivity", "Showing");
+                mAddButton.animate().translationY(0).setInterpolator((new DecelerateInterpolator(2))).start();
+
+                mGraphButton.animate().translationY(0).setInterpolator((new DecelerateInterpolator(2))).start();
+            }
+        });
+
 
     }
 
@@ -72,6 +102,7 @@ public class ListActivity extends AppCompatActivity {
         dataStore.setNumTimesRun(dataStore.getNumTimesRun() + 1);
         dataStore.commitChanges(this);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
