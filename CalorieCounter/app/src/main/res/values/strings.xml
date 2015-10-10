@@ -4,4 +4,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">About</string>
     <string name="title_activity_graph">GraphActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="aboutText">This app was built by Sean Maraia and Evan Albitz</string>
 </resources>
